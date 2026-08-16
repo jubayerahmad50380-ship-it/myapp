@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>তাসবিহ অ্যাপ</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f1f7f3;
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      max-width: 420px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      color: #145c43;
+      font-size: 42px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+    }
+
+    .count {
+      color: #145c43;
+      font-size: 60px;
+      font-weight: bold;
+      margin: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #17664f;
+      color: white;
+      font-size: 18px;
+    }
+
+    .reset {
+      background: #b44b48;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <h1>তাসবিহ</h1>
+
+    <div class="card">
+      <p>আপনি যতবার পড়েছেন:</p>
+
+      <div class="count" id="count">
+        0
+      </div>
+
+      <button id="countButton">
+        গণনা বৃদ্ধি করুন
+      </button>
+
+      <button class="reset" id="resetButton">
+        শূন্য করুন
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let count = 0;
+
+    const countText = document.getElementById("count");
+    const countButton = document.getElementById("countButton");
+    const resetButton = document.getElementById("resetButton");
+
+    countButton.addEventListener("click", function () {
+      count = count + 1;
+      countText.textContent = count;
+    });
+
+    resetButton.addEventListener("click", function () {
+      count = 0;
+      countText.textContent = count;
+    });
+  </script>
+</body>
+</html>
