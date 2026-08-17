@@ -22,25 +22,40 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Dependencies
+      - name: Fix Files and Dependencies
         run: |
-          npm install @capacitor/cli @capacitor/core @capacitor/android
+          # যদি কোনো কারণে আগের ফাইল থেকে থাকে তা ডিলিট করবে
+          rm -rf android capacitor.config.json package.json package-lock.json
+          
+          # নতুন করে package.json তৈরি করা
+          echo '{
+            "name": "com.tasbih.app",
+            "version": "1.0.0",
+            "dependencies": {
+              "@capacitor/android": "^5.0.0",
+              "@capacitor/cli": "^5.0.0",
+              "@capacitor/core": "^5.0.0"
+            }
+          }' > package.json
+          
+          # ডিপেন্ডেন্সি ইনস্টল করা
+          npm install
 
-      - name: Initialize Android Project
+      - name: Initialize Capacitor
         run: |
-          if [ ! -d "android" ]; then
-            npx cap add android
-          fi
+          # এখানে Capacitor সেটআপ করা হচ্ছে সরাসরি রুট ডিরেক্টরির জন্য
+          npx cap init Tasbih com.tasbih.app --web-dir .
+          npx cap add android
           npx cap copy
 
-      - name: Build Android APK
+      - name: Build APK with Gradle
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload Finished APK
         uses: actions/upload-artifact@v4
         with:
-          name: My-Tasbih-App
+          name: Tasbih-App-Build
           path: android/app/build/outputs/apk/debug/app-debug.apk
