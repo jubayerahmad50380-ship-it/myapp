@@ -43,13 +43,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Tasbih-App-Build
-          path: android/app/build/outputs/apk/debug/app-debug.apk        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: My-Tasbih-App
           path: android/app/build/outputs/apk/debug/app-debug.apk
