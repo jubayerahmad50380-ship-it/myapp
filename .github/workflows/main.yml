@@ -14,12 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      - name: Install Dependencies
-        run: |
-          npm install
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          node-version: 20
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,10 +22,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Create Android Project
+      - name: Install Dependencies
         run: |
-          npx cap init Tasbih com.tasbih.app --web-dir .
-          npx cap add android
+          npm install @capacitor/cli @capacitor/core @capacitor/android
+
+      - name: Initialize Android Project
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
           npx cap copy
 
       - name: Build Android APK
@@ -42,5 +42,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Tasbih-App-Build
+          name: My-Tasbih-App
           path: android/app/build/outputs/apk/debug/app-debug.apk
